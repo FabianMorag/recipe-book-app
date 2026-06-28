@@ -41,6 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 # local assistant caches / generated skill mirrors
+/.atl/
 /.agents/
 /.claude/
 /skills-lock.json
