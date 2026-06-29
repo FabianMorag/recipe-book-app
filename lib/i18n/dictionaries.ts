@@ -21,6 +21,20 @@ export const es = {
   "nav.create": "Crear",
   "nav.mine": "Mis recetas",
   "locale.label": "Idioma",
+  "recipeDetail.back": "Volver a Descubrir",
+  "recipeDetail.save": "Guardar receta",
+  "recipeDetail.statusShared": "Compartida",
+  "recipeDetail.authorLabel": "por",
+  "recipeDetail.servings": "Porciones",
+  "recipeDetail.ingredients": "Ingredientes",
+  "recipeDetail.steps": "Preparación",
+  "recipeDetail.aiHint.label": "Sugerencia con IA",
+  "recipeDetail.aiHint.text":
+    "Prueba acompañar esta receta con una ensalada fresca para un plato más completo.",
+  "recipeDetail.loading": "Cargando receta",
+  "recipeDetail.error": "No pudimos cargar la receta",
+  "recipeDetail.retry": "Reintentar",
+  "recipeDetail.notFound": "No encontramos esta receta",
 } as const;
 
 export type TranslationKey = keyof typeof es;
@@ -55,6 +69,20 @@ export const dictionaries = {
     "nav.create": "Create",
     "nav.mine": "My recipes",
     "locale.label": "Language",
+    "recipeDetail.back": "Back to Discover",
+    "recipeDetail.save": "Save recipe",
+    "recipeDetail.statusShared": "Shared",
+    "recipeDetail.authorLabel": "by",
+    "recipeDetail.servings": "Servings",
+    "recipeDetail.ingredients": "Ingredients",
+    "recipeDetail.steps": "Steps",
+    "recipeDetail.aiHint.label": "AI suggestion",
+    "recipeDetail.aiHint.text":
+      "Try pairing this recipe with a fresh salad for a more complete meal.",
+    "recipeDetail.loading": "Loading recipe",
+    "recipeDetail.error": "We could not load this recipe",
+    "recipeDetail.retry": "Retry",
+    "recipeDetail.notFound": "We could not find this recipe",
   },
 } satisfies CompleteDictionaries;
 

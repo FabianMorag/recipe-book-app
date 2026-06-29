@@ -45,3 +45,58 @@ export function mapPublicRecipe(
 export function mapPublicRecipes(recipes: PublicRecipeDto[]) {
   return recipes.map(mapPublicRecipe);
 }
+
+export type PublicRecipeDetailFields = {
+  ingredients: string[];
+  steps: string[];
+  servings: number;
+  tags: string[];
+  shared: boolean;
+  aiHint: string;
+};
+
+export type PublicRecipeDetail = PublicRecipeCard & PublicRecipeDetailFields;
+
+// Widened input: the backend may ship real detail fields in a future release.
+// Real fields coexist with mocked values (mixin allowed, real values win).
+type PublicRecipeDetailInput = PublicRecipeDto & Partial<PublicRecipeDetailFields>;
+
+// Isolated mocked detail-only values. Replace when the backend ships real fields.
+const MOCK_DETAIL_INGREDIENTS: string[][] = [
+  ["500 g de carne molida", "2 cebollas", "3 huevos", "Sal y pimienta", "1 taza de caldo"],
+  ["4 papas", "100 g de queso", "1 lata de atún", "Mayonesa", "Perejil fresco"],
+];
+const MOCK_DETAIL_STEPS: string[][] = [
+  [
+    "Sofreír la cebolla en aceite caliente.",
+    "Agregar la carne y cocinar 10 minutos.",
+    "Servir caliente con el caldo.",
+  ],
+  [
+    "Cocer las papas hasta que estén tiernas.",
+    "Mezclar con el atún y el queso.",
+    "Decorar con perejil fresco.",
+  ],
+];
+const MOCK_DETAIL_TAGS = ["chileno", "horno"];
+const MOCK_DETAIL_SERVINGS = 4;
+const MOCK_DETAIL_AI_HINT =
+  "Sugerencia de IA: prueba acompañar esta receta con una ensalada fresca.";
+
+export function mapPublicRecipeDetail(
+  recipe: PublicRecipeDetailInput,
+  index = 0,
+): PublicRecipeDetail {
+  const card = mapPublicRecipe(recipe, index);
+  return {
+    ...card,
+    ingredients:
+      recipe.ingredients ??
+      MOCK_DETAIL_INGREDIENTS[index % MOCK_DETAIL_INGREDIENTS.length],
+    steps: recipe.steps ?? MOCK_DETAIL_STEPS[index % MOCK_DETAIL_STEPS.length],
+    servings: recipe.servings ?? MOCK_DETAIL_SERVINGS,
+    tags: recipe.tags ?? [...MOCK_DETAIL_TAGS],
+    shared: recipe.shared ?? (recipe.status === "PUBLIC"),
+    aiHint: recipe.aiHint ?? MOCK_DETAIL_AI_HINT,
+  };
+}

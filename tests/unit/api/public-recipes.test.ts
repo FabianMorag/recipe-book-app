@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { mapPublicRecipe, mapPublicRecipes } from "@/lib/api/public-recipes";
+import {
+  mapPublicRecipe,
+  mapPublicRecipeDetail,
+  mapPublicRecipes,
+} from "@/lib/api/public-recipes";
 import type { PublicRecipeDto } from "@/lib/api/public-recipes";
 
 const backendRecipe: PublicRecipeDto = {
@@ -33,5 +37,49 @@ describe("public recipe mapper", () => {
 
     expect(recipes).toHaveLength(2);
     expect(recipes[0].category).not.toBe(recipes[1].category);
+  });
+});
+
+describe("mapPublicRecipeDetail", () => {
+  it("adds detail-only mocked fields while preserving summary fields", () => {
+    const detail = mapPublicRecipeDetail(backendRecipe, 0);
+
+    expect(detail).toMatchObject(backendRecipe);
+    expect(detail.image.alt).toBe("Foto de Tarta de manzana");
+    expect(detail.author.name).toBe("Cocina Pública");
+    expect(detail.category).toBe("Postres");
+
+    expect(detail.ingredients.length).toBeGreaterThan(0);
+    expect(detail.steps.length).toBeGreaterThan(0);
+    expect(detail.servings).toBeGreaterThan(0);
+    expect(detail.tags.length).toBeGreaterThan(0);
+    expect(detail.shared).toBe(true);
+    expect(detail.aiHint.length).toBeGreaterThan(0);
+  });
+
+  it("derives the shared flag from the recipe status by default", () => {
+    expect(mapPublicRecipeDetail(backendRecipe, 0).shared).toBe(true);
+    expect(
+      mapPublicRecipeDetail({ ...backendRecipe, status: "DRAFT" }, 0).shared,
+    ).toBe(false);
+  });
+
+  it("lets real backend detail fields win over mocked values", () => {
+    const detail = mapPublicRecipeDetail(
+      {
+        ...backendRecipe,
+        servings: 6,
+        ingredients: ["Harina", "Huevos"],
+        tags: ["casero", "rápido"],
+      },
+      0,
+    );
+
+    expect(detail.servings).toBe(6);
+    expect(detail.ingredients).toEqual(["Harina", "Huevos"]);
+    expect(detail.tags).toEqual(["casero", "rápido"]);
+    // remaining missing fields still receive mock values
+    expect(detail.steps.length).toBeGreaterThan(0);
+    expect(detail.aiHint.length).toBeGreaterThan(0);
   });
 });

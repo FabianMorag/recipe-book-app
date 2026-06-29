@@ -6,6 +6,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { API_BASE_URL } from "@/lib/api/client";
 import {
   PUBLIC_RECIPES_STALE_TIME_MS,
+  usePublicRecipeDetail,
   usePublicRecipes,
 } from "@/lib/api/use-public-recipes";
 import type { PublicRecipeDto } from "@/lib/api/public-recipes";
@@ -102,5 +103,43 @@ describe("usePublicRecipes", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(PUBLIC_RECIPES_STALE_TIME_MS).toBe(60 * 1000);
     expect(result.current.isStale).toBe(false);
+  });
+});
+
+describe("usePublicRecipeDetail", () => {
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
+  it("returns the mapped detail for a cached recipe id", async () => {
+    server.use(
+      http.get(`${API_BASE_URL}/recipes/public`, () => HttpResponse.json(recipes)),
+    );
+
+    const { result } = renderHook(() => usePublicRecipeDetail("recipe_1"), {
+      wrapper,
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data?.id).toBe("recipe_1");
+    expect(result.current.data?.title).toBe("Tarta de manzana");
+    expect(result.current.data?.ingredients.length).toBeGreaterThan(0);
+    expect(result.current.data?.steps.length).toBeGreaterThan(0);
+    expect(result.current.data?.tags.length).toBeGreaterThan(0);
+    expect(typeof result.current.data?.servings).toBe("number");
+    expect(result.current.data?.shared).toBe(true);
+  });
+
+  it("returns null when the id is not in the cached recipes", async () => {
+    server.use(
+      http.get(`${API_BASE_URL}/recipes/public`, () => HttpResponse.json(recipes)),
+    );
+
+    const { result } = renderHook(() => usePublicRecipeDetail("missing"), {
+      wrapper,
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toBeNull();
   });
 });
