@@ -14,8 +14,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Recipe Book",
-  description: "Discover, save, and cook favorite recipes.",
+  title: "Recetario",
+  description: "Descubre, guarda y cocina tus recetas favoritas.",
+  openGraph: {
+    title: "Recetario",
+    description: "Descubre, guarda y cocina tus recetas favoritas.",
+    locale: "es",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -25,10 +31,11 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
+      data-theme="recipebook"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-full flex-col bg-base-200 text-base-content">
         <Providers>{children}</Providers>
       </body>
     </html>
