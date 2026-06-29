@@ -48,7 +48,9 @@ test("English switch updates copy and html lang", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Discover" })).toBeVisible();
 });
 
-test("metadata head renders Spanish title, description, and OG locale", async ({ page }) => {
+test("metadata head renders Spanish title, description, and OG locale", async ({
+  page,
+}) => {
   await page.goto("/");
 
   await expect(page).toHaveTitle("Recetario");
@@ -56,10 +58,15 @@ test("metadata head renders Spanish title, description, and OG locale", async ({
     "content",
     "Descubre, guarda y cocina tus recetas favoritas.",
   );
-  await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute("content", "es");
+  await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
+    "content",
+    "es",
+  );
 });
 
-test("mobile viewport stacks cards and fixes bottom navigation", async ({ page }) => {
+test("mobile viewport stacks cards and fixes bottom navigation", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
@@ -67,10 +74,9 @@ test("mobile viewport stacks cards and fixes bottom navigation", async ({ page }
   const secondCard = page.getByRole("article", { name: "Sopa de calabaza" });
   await expect(firstCard).toBeVisible();
   await expect(secondCard).toBeVisible();
-  await expect(page.getByRole("navigation", { name: "Navegación principal" })).toHaveCSS(
-    "position",
-    "fixed",
-  );
+  await expect(
+    page.getByRole("navigation", { name: "Navegación principal" }),
+  ).toHaveCSS("position", "fixed");
 
   const firstBox = await firstCard.boundingBox();
   const secondBox = await secondCard.boundingBox();
@@ -80,11 +86,13 @@ test("mobile viewport stacks cards and fixes bottom navigation", async ({ page }
   expect(Math.abs(secondBox!.x - firstBox!.x)).toBeLessThan(2);
 });
 
-test("desktop viewport centers content and renders a multi-column recipe grid", async ({ page }) => {
+test("desktop viewport centers content and renders a multi-column recipe grid", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
 
-  const recipeGrid = page.getByRole("region", { name: "Recetas públicas" });
+  const recipeGrid = page.getByRole("region", { name: "Recetas compartidas" });
   await expect(recipeGrid).toBeVisible();
   await expect(recipeGrid).toHaveCSS("grid-template-columns", /.+ .+ .+/);
 
@@ -103,7 +111,9 @@ test("error state exposes retry", async ({ page }) => {
   await page.goto("/");
 
   await expect(
-    page.getByRole("alert").filter({ hasText: "No pudimos cargar las recetas" }),
+    page
+      .getByRole("alert")
+      .filter({ hasText: "No pudimos cargar las recetas" }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Reintentar" })).toBeVisible();
 });
@@ -116,13 +126,19 @@ test("empty state keeps controls interactive", async ({ page }) => {
 
   await page.goto("/");
 
-  await expect(page.getByText("No hay recetas públicas todavía")).toBeVisible();
+  await expect(
+    page.getByText("No hay recetas compartidas todavía"),
+  ).toBeVisible();
   await expect(page.getByLabel("Buscar recetas")).toBeEnabled();
 });
 
-test("keyboard navigation reaches search, pills, cards, and nav", async ({ page }) => {
+test("keyboard navigation reaches search, pills, cards, and nav", async ({
+  page,
+}) => {
   await page.goto("/");
-  await expect(page.getByRole("article", { name: "Tarta de manzana" })).toBeVisible();
+  await expect(
+    page.getByRole("article", { name: "Tarta de manzana" }),
+  ).toBeVisible();
 
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Buscar recetas")).toBeFocused();
@@ -133,18 +149,28 @@ test("keyboard navigation reaches search, pills, cards, and nav", async ({ page 
   await page.keyboard.press("Tab");
   await expect(page.getByRole("button", { name: "Sopas" })).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("button", { name: "Platos rápidos" })).toBeFocused();
+  await expect(
+    page.getByRole("button", { name: "Platos rápidos" }),
+  ).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("article", { name: "Tarta de manzana" })).toBeFocused();
+  await expect(
+    page.getByRole("article", { name: "Tarta de manzana" }),
+  ).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("article", { name: "Sopa de calabaza" })).toBeFocused();
+  await expect(
+    page.getByRole("article", { name: "Sopa de calabaza" }),
+  ).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("article", { name: "Wrap rápido" })).toBeFocused();
+  await expect(
+    page.getByRole("article", { name: "Wrap rápido" }),
+  ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(page.getByRole("button", { name: "Descubrir" })).toBeFocused();
 });
 
-test("result count is announced with aria-live as filters change", async ({ page }) => {
+test("result count is announced with aria-live as filters change", async ({
+  page,
+}) => {
   await page.goto("/");
 
   const resultCount = page.locator('[aria-live="polite"]');

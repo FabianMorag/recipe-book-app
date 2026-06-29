@@ -18,5 +18,7 @@ test("home page loads", async ({ page }) => {
   await page.goto("/");
 
   await expect(page).toHaveTitle(/Recetario/);
-  await expect(page.getByRole("heading", { name: "Descubre recetas públicas" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Descubre recetas compartidas" }),
+  ).toBeVisible();
 });

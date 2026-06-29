@@ -48,20 +48,28 @@ describe("DiscoverHome", () => {
 
   it("renders the composed Spanish discover layout with fetched recipes", async () => {
     server.use(
-      http.get(`${API_BASE_URL}/recipes/public`, () => HttpResponse.json(recipes)),
+      http.get(`${API_BASE_URL}/recipes/public`, () =>
+        HttpResponse.json(recipes),
+      ),
     );
 
     renderWithProviders(<DiscoverHome />);
 
-    expect(screen.getByRole("heading", { name: "Descubre recetas públicas" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Descubre recetas compartidas" }),
+    ).toBeInTheDocument();
     await screen.findByRole("article", { name: "Tarta de manzana" });
-    expect(screen.getByRole("navigation", { name: "Navegación principal" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "Navegación principal" }),
+    ).toBeInTheDocument();
   });
 
   it("filters recipes by search text and announces the result count", async () => {
     const user = userEvent.setup();
     server.use(
-      http.get(`${API_BASE_URL}/recipes/public`, () => HttpResponse.json(recipes)),
+      http.get(`${API_BASE_URL}/recipes/public`, () =>
+        HttpResponse.json(recipes),
+      ),
     );
 
     renderWithProviders(<DiscoverHome />);
@@ -69,18 +77,29 @@ describe("DiscoverHome", () => {
 
     await user.type(screen.getByLabelText("Buscar recetas"), "sopa");
 
-    expect(screen.queryByRole("article", { name: "Tarta de manzana" })).not.toBeInTheDocument();
-    expect(screen.getByRole("article", { name: "Sopa verde" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("article", { name: "Tarta de manzana" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("article", { name: "Sopa verde" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("1 receta encontrada")).toBeInTheDocument();
   });
 
   it("renders an alert when fetching fails", async () => {
     server.use(
-      http.get(`${API_BASE_URL}/recipes/public`, () => new HttpResponse(null, { status: 500 })),
+      http.get(
+        `${API_BASE_URL}/recipes/public`,
+        () => new HttpResponse(null, { status: 500 }),
+      ),
     );
 
     renderWithProviders(<DiscoverHome />);
 
-    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("No pudimos cargar las recetas"));
+    await waitFor(() =>
+      expect(screen.getByRole("alert")).toHaveTextContent(
+        "No pudimos cargar las recetas",
+      ),
+    );
   });
 });

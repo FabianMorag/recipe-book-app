@@ -14,11 +14,19 @@ export function DiscoverHome() {
   const { locale, setLocale, t } = useTranslations();
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(t("categories.all"));
-  const { data: recipes = [], isLoading, isError, refetch } = usePublicRecipes();
+  const {
+    data: recipes = [],
+    isLoading,
+    isError,
+    refetch,
+  } = usePublicRecipes();
 
   const allCategory = t("categories.all");
   const categories = useMemo(
-    () => [allCategory, ...Array.from(new Set(recipes.map((recipe) => recipe.category)))],
+    () => [
+      allCategory,
+      ...Array.from(new Set(recipes.map((recipe) => recipe.category))),
+    ],
     [allCategory, recipes],
   );
 
@@ -46,21 +54,21 @@ export function DiscoverHome() {
       : t("results.many").replace("{count}", String(filteredRecipes.length));
 
   return (
-    <main className="min-h-dvh bg-base-200 pb-24">
-      <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
-        <header className="rounded-[2rem] bg-base-100 p-6 shadow-sm sm:p-8">
+    <main className="bg-base-200 pb-24 min-h-dvh">
+      <section className="flex flex-col gap-8 mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10 w-full max-w-6xl">
+        <header className="bg-base-100 shadow-sm p-6 sm:p-8 rounded-[2rem]">
           <div>
-            <p className="badge badge-soft mb-4">{t("hero.eyebrow")}</p>
-            <h1 className="max-w-2xl text-4xl font-black tracking-tight text-base-content sm:text-5xl">
+            <p className="mb-4 badge badge-soft">{t("hero.eyebrow")}</p>
+            <h1 className="max-w-2xl font-black text-base-content text-4xl sm:text-5xl tracking-tight">
               {t("hero.title")}
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-base-content/70 sm:text-lg">
+            <p className="mt-4 max-w-2xl text-base text-base-content/70 sm:text-lg leading-7">
               {t("hero.description")}
             </p>
           </div>
         </header>
 
-        <section className="grid gap-4" aria-label="Explorar recetas">
+        <section className="gap-4 grid" aria-label="Explorar recetas">
           <SearchBar
             value={query}
             placeholder={t("search.placeholder")}
@@ -71,7 +79,10 @@ export function DiscoverHome() {
             selectedCategory={effectiveSelectedCategory}
             onSelect={setSelectedCategory}
           />
-          <p aria-live="polite" className="text-sm font-medium text-base-content/70">
+          <p
+            aria-live="polite"
+            className="font-medium text-sm text-base-content/70"
+          >
             {resultCount}
           </p>
         </section>
@@ -92,8 +103,8 @@ export function DiscoverHome() {
         ) : null}
         {!isLoading && !isError && filteredRecipes.length > 0 ? (
           <section
-            className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
-            aria-label="Recetas públicas"
+            className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            aria-label="Recetas compartidas"
           >
             {filteredRecipes.map((recipe) => (
               <RecipeCard
@@ -113,7 +124,7 @@ export function DiscoverHome() {
           mine: t("nav.mine"),
         }}
       />
-      <div className="fixed right-4 top-4 z-10">
+      <div className="top-4 right-4 z-10 fixed">
         <LocaleSwitch
           locale={locale}
           label={t("locale.label")}
