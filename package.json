@@ -13,6 +13,7 @@
     "api:types": "openapi-typescript http://localhost:3000/docs-json -o lib/api/schema.ts"
   },
   "dependencies": {
+    "@fontsource-variable/nunito-sans": "^5.2.7",
     "@hookform/resolvers": "5.4.0",
     "@tanstack/react-query": "5.101.1",
     "@tanstack/react-query-devtools": "5.101.1",
