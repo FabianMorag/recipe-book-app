@@ -41,6 +41,9 @@ yarn-error.log*
 next-env.d.ts
 
 # local assistant caches / generated skill mirrors
+/.codegraph/
+/.openspec/
+/openspec/
 /.atl/
 /.agents/
 /.claude/
