@@ -55,3 +55,39 @@ describe("recipeDetail translation keys", () => {
     expect(t("recipeDetail.ingredients")).toBe("Ingredientes");
   });
 });
+
+describe("createRecipe translation keys", () => {
+  it("includes the required Create Recipe keys in Spanish", () => {
+    expect(dictionaries.es["createRecipe.heading"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.title"]).toBe("Título");
+    expect(dictionaries.es["createRecipe.description"]).toBe("Descripción");
+    expect(dictionaries.es["createRecipe.status"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.statusDraft"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.statusPrivate"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.statusPublic"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.tags"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.ingredients"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.steps"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.aiHelper"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.boundaryNotice"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.submit"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.success"]).toBeDefined();
+    expect(dictionaries.es["createRecipe.errorRequiredTitle"]).toBe(
+      "El título es obligatorio",
+    );
+  });
+
+  it("resolves every Create Recipe key in English", () => {
+    const createRecipeKeys = Object.keys(dictionaries.es).filter((key) =>
+      key.startsWith("createRecipe."),
+    );
+    const english = dictionaries.en as Record<string, string>;
+    for (const key of createRecipeKeys) {
+      expect(english[key]).toBeDefined();
+    }
+    expect(dictionaries.en["createRecipe.submit"]).toBe("Create Recipe");
+    expect(dictionaries.en["createRecipe.errorRequiredTitle"]).toBe(
+      "Title is required",
+    );
+  });
+});

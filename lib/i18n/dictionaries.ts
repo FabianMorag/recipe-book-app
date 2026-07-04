@@ -35,6 +35,36 @@ export const es = {
   "recipeDetail.error": "No pudimos cargar la receta",
   "recipeDetail.retry": "Reintentar",
   "recipeDetail.notFound": "No encontramos esta receta",
+  "createRecipe.heading": "Nueva receta",
+  "createRecipe.title": "Título",
+  "createRecipe.titlePlaceholder": "Escribe el título de la receta",
+  "createRecipe.description": "Descripción",
+  "createRecipe.descriptionPlaceholder":
+    "Notas generales, contexto o acompañamientos",
+  "createRecipe.status": "Visibilidad",
+  "createRecipe.statusDraft": "Borrador",
+  "createRecipe.statusPrivate": "Privada",
+  "createRecipe.statusPublic": "Pública",
+  "createRecipe.tags": "Etiquetas",
+  "createRecipe.tagsPlaceholder": "Etiqueta",
+  "createRecipe.tagsAdd": "Agregar etiqueta",
+  "createRecipe.ingredients": "Ingredientes",
+  "createRecipe.ingredientsPlaceholder": "Ingrediente",
+  "createRecipe.ingredientsAdd": "Agregar ingrediente",
+  "createRecipe.steps": "Preparación",
+  "createRecipe.stepsPlaceholder": "Paso",
+  "createRecipe.stepsAdd": "Agregar paso",
+  "createRecipe.aiHelper": "Ayuda con IA",
+  "createRecipe.aiHelperHint":
+    "Próximamente: sugerencias inteligentes mientras escribes.",
+  "createRecipe.boundaryNotice":
+    "Estos campos no se guardan todavía. Se conservan mientras redactas la receta.",
+  "createRecipe.submit": "Crear receta",
+  "createRecipe.submitting": "Guardando…",
+  "createRecipe.success": "Receta creada. Puedes seguir editando los campos locales.",
+  "createRecipe.errorRequiredTitle": "El título es obligatorio",
+  "createRecipe.errorSubmit":
+    "No pudimos crear la receta. Inténtalo de nuevo.",
 } as const;
 
 export type TranslationKey = keyof typeof es;
@@ -83,6 +113,36 @@ export const dictionaries = {
     "recipeDetail.error": "We could not load this recipe",
     "recipeDetail.retry": "Retry",
     "recipeDetail.notFound": "We could not find this recipe",
+    "createRecipe.heading": "New recipe",
+    "createRecipe.title": "Title",
+    "createRecipe.titlePlaceholder": "Enter the recipe title",
+    "createRecipe.description": "Description",
+    "createRecipe.descriptionPlaceholder":
+      "General notes, context, or pairings",
+    "createRecipe.status": "Visibility",
+    "createRecipe.statusDraft": "Draft",
+    "createRecipe.statusPrivate": "Private",
+    "createRecipe.statusPublic": "Public",
+    "createRecipe.tags": "Tags",
+    "createRecipe.tagsPlaceholder": "Tag",
+    "createRecipe.tagsAdd": "Add tag",
+    "createRecipe.ingredients": "Ingredients",
+    "createRecipe.ingredientsPlaceholder": "Ingredient",
+    "createRecipe.ingredientsAdd": "Add ingredient",
+    "createRecipe.steps": "Steps",
+    "createRecipe.stepsPlaceholder": "Step",
+    "createRecipe.stepsAdd": "Add step",
+    "createRecipe.aiHelper": "AI helper",
+    "createRecipe.aiHelperHint":
+      "Coming soon: smart suggestions while you write.",
+    "createRecipe.boundaryNotice":
+      "These fields are not saved yet. They stay while you draft the recipe.",
+    "createRecipe.submit": "Create Recipe",
+    "createRecipe.submitting": "Saving…",
+    "createRecipe.success": "Recipe created. You can keep editing local fields.",
+    "createRecipe.errorRequiredTitle": "Title is required",
+    "createRecipe.errorSubmit":
+      "We could not create the recipe. Please try again.",
   },
 } satisfies CompleteDictionaries;
 

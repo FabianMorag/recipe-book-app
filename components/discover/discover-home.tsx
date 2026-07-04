@@ -119,6 +119,7 @@ export function DiscoverHome() {
 
       <BottomNav
         labels={{
+          nav: t("nav.label"),
           discover: t("nav.discover"),
           create: t("nav.create"),
           mine: t("nav.mine"),
