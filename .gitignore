@@ -45,7 +45,6 @@ next-env.d.ts
 /.openspec/
 /openspec/
 /.atl/
-/.agents/
 /.claude/
 /skills-lock.json
 # Local Pi runtime state
