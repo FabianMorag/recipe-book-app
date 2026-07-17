@@ -42,10 +42,6 @@ next-env.d.ts
 
 # local assistant caches / generated skill mirrors
 /.codegraph/
-/.openspec/
-/openspec/
 /.atl/
 /.claude/
 /skills-lock.json
-# Local Pi runtime state
-.atl/
